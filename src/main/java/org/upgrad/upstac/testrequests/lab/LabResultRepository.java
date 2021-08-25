@@ -13,13 +13,7 @@ public interface LabResultRepository extends JpaRepository<LabResult,Long> {
 
     Optional<LabResult> findById(Long id);
 
-
-
     void deleteById(Long id);
-
-
-
-
 
     List<LabResult> findByTester(User user);
     Optional<LabResult> findByTesterAndRequest(User user,TestRequest testRequest);

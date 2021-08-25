@@ -7,10 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.upgrad.upstac.exception.AppException;
 import org.upgrad.upstac.testrequests.TestRequest;
+import org.upgrad.upstac.testrequests.lab.LabResult;
 import org.upgrad.upstac.users.User;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Validated
@@ -29,6 +32,20 @@ public class ConsultationService {
         consultation.setRequest(testRequest);
 
         return    consultationRepository.save(consultation);
+
+
+    }
+
+    @Transactional
+    public  List<TestRequest> getAssignedRequestForDoctor(User doctor) {
+        List<TestRequest> testRequests =new ArrayList<>();
+        List<Consultation> consultations= consultationRepository.findByDoctor(doctor);
+        consultations.stream().forEach(o->{
+            testRequests.add(o.getRequest());
+        });
+
+        return testRequests;
+
 
 
     }

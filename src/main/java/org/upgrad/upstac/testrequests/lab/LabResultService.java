@@ -11,6 +11,8 @@ import org.upgrad.upstac.users.User;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Validated
@@ -46,6 +48,18 @@ public class LabResultService {
 
     }
 
+
+    public List<TestRequest> getTestByAssignee(User user){
+
+        List<TestRequest> testRequests = new ArrayList<>();
+        List<LabResult> results=labResultRepository.findByTester(user);
+        results.stream().forEach(o->{
+            testRequests.add(o.getRequest());
+        });
+
+        return testRequests;
+
+    }
 
     public LabResult updateLabTest(TestRequest testRequest, CreateLabResult createLabResult) {
 
